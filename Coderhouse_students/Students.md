@@ -15,7 +15,7 @@ FROM Asignaturas
 WHERE Area = 5
 
 ```
-![Alt text](image-2.png)
+![Alt text](image-1.png)
 
 
 ### 2. It is required to know the name, identification document and telephone number of students who are professionals in agronomy and who were born between 1970 and 2000.

@@ -4,15 +4,14 @@ The database consist in 6 tables: Area, Asignaturas, Encargado, Estudiantes, Pro
 
 ### 1. Indicate how many courses and careers the Data area has. Rename the new column as cant_assignatures.
 
-    ```sql
-    SELECT * FROM Area -- id= 5
-SELECT * FROM Asignaturas --164 rows
+ ```sql
+SELECT * FROM Area 
 
 SELECT COUNT(Area) AS cant_assignatures  
 FROM Asignaturas 
 WHERE Area = 5
 
-    ```
+```
 
 ### 2. It is required to know the name, identification document and telephone number of students who are professionals in agronomy and who were born between 1970 and 2000.
 ```sql
@@ -32,7 +31,7 @@ SELECT UPPER (CONCAT_WS ('-', Nombre, Apellido)) AS Nombres_Apellidos
 FROM Staff WHERE [Fecha Ingreso] BETWEEN '2021-01-01' AND '2021-12-31'
 ```
 
-### 4. NO PUDEEEEE Indicate the number of teachers and tutors in charge. Rename the column to CantEncargados. Remove the word Manager in each of the records. Rename the column as NuevoTipo.
+### 4. Indicate the number of teachers and tutors in charge. Rename the column to CantEncargados. Remove the word Manager in each of the records. Rename the column as NuevoTipo.
 ```sql
 SELECT COUNT(Encargado_ID) AS  CantEncargados FROM Encargado
 

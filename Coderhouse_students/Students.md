@@ -1,17 +1,22 @@
 # Coderhouse students queries 👨‍🎓
 ## Software: SQL SERVER MANAGEMENT STUDIO
-The database consist in 6 tables: Area, Asignaturas, Encargado, Estudiantes, Profesiones, Staff.
+The database CoderHouse(3).bak consist in 6 tables: Area, Asignaturas, Encargado, Estudiantes, Profesiones, Staff.
 
 ### 1. Indicate how many courses and careers the Data area has. Rename the new column as cant_assignatures.
 
  ```sql
-SELECT * FROM Area 
+SELECT * FROM Area
+```
+![Alt text](image.png)
 
+```sql
 SELECT COUNT(Area) AS cant_assignatures  
 FROM Asignaturas 
 WHERE Area = 5
 
 ```
+![Alt text](image-2.png)
+
 
 ### 2. It is required to know the name, identification document and telephone number of students who are professionals in agronomy and who were born between 1970 and 2000.
 ```sql

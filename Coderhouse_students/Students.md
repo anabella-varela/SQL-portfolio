@@ -66,14 +66,14 @@ FROM Estudiantes
 ORDER BY [Fecha Ingreso]
 ```
 
-### 9. Indicate the name, surname and identification document of the teachers and tutors who have �UX� subjects
+### 9. Indicate the name, surname and identification document of the teachers and tutors who have UX subjects
 ```sql
 SELECT Nombre, Apellido, Documento FROM Staff 
 WHERE Asignatura IN (
 	SELECT AsignaturasID FROM Asignaturas WHERE Nombre LIKE '%UX%'
 					)
  ```
-### 10. calculate the 25% increase for the subjects in the marketing area for the morning shift, all the fields must be brought, The new cost must be in decimal with 3 digits. Rename the percentage calculation to Porcentaje and the sum of the cost plus the percentage to NuevoCosto
+### 10. Calculate the 25% increase for the subjects in the marketing area for the morning shift, all the fields must be brought, The new cost must be in decimal with 3 digits. Rename the percentage calculation to Porcentaje and the sum of the cost plus the percentage to NuevoCosto
 ```sql
 SELECT AsignaturasID, 
 		Nombre,		

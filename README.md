@@ -5,4 +5,4 @@ Welcome to my Structured query language portfolio! Here, I document a summary of
 
 ## Table of Contents
 
-- [Coderhouse Students Query](https://github.com/anabella-varela/SQL-portfolio/blob/main/Coderhouse_students/Students.md)
+- 👨‍🎓[Coderhouse Students Query](https://github.com/anabella-varela/SQL-portfolio/blob/main/Coderhouse_students/Students.md)

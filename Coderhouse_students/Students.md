@@ -1,6 +1,8 @@
 # 👨‍🎓Coderhouse students queries 👨‍🎓
-## 👩‍💻Software: SQL SERVER MANAGEMENT STUDIO
-## 📔Database: CoderHouse(3).bak consist in 6 tables, named in Spanish: Area, Asignaturas, Encargado, Estudiantes, Profesiones, Staff.
+## 👩‍💻Software: 
+SQL SERVER MANAGEMENT STUDIO
+## 📔Database: 
+CoderHouse(3).bak consist in 6 tables, named in Spanish: Area, Asignaturas, Encargado, Estudiantes, Profesiones, Staff.
 
 ### 1. Indicate how many courses and careers the Data area has. Rename the new column as cant_assignatures.
 First I need to check the ID of the Data area

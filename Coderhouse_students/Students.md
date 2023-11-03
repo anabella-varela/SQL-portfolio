@@ -2,7 +2,7 @@
 ## 👩‍💻Software: 
 SQL SERVER MANAGEMENT STUDIO
 ## 📔Database: 
-CoderHouse(3).bak consist in 6 tables, named in Spanish: Area, Asignaturas, Encargado, Estudiantes, Profesiones, Staff.
+CoderHouse(3).bak consist in 6 tables, named in Spanish: "Area", "Asignaturas", "Encargado", "Estudiantes", "Profesiones", "Staff".
 
 ### 1. Indicate how many courses and careers the Data area has. Rename the new column as cant_assignatures.
 First I need to check the ID of the Data area
@@ -44,19 +44,17 @@ FROM Staff WHERE [Fecha Ingreso] BETWEEN '2021-01-01' AND '2021-12-31'
 
 ### 4. Indicate the number of teachers and tutors in charge. Rename the column to CantEncargados. Remove the word Manager in each of the records. Rename the column as NuevoTipo.
 ```sql
-SELECT COUNT(Encargado_ID) AS  CantEncargados FROM Encargado
-```
-![Alt text](image-4.png)
-
-```sql
-UPDATE Encargado SET [Tipo] = REPLACE('Encargado Docente', 'Encargado', '')
+SELECT COUNT(Encargado_ID) AS CantEncargados, TRIM('Encargado' FROM Tipo) AS NuevoTipo
+FROM Encargado
+GROUP BY Tipo
 ```
 
-### 5. Indicate the average price of the carreers and courses per day. Rename the new column Average. Order the averages from Highest to Lowest.
-Como hago para poner nombre a las filas ????
+### 5. Indicate the average price of the carreers and courses per day. Rename the new column "Promedio". Order the averages from Highest to Lowest.
+
 ```sql
-SELECT AVG(Costo) AS Promedio FROM Asignaturas GROUP BY Tipo ORDER BY Tipo
+SELECT AVG(Costo) AS Promedio, Tipo FROM Asignaturas GROUP BY Tipo ORDER BY Tipo
 ```
+![Alt text](image-10.png)
 
 ### 6. Calculate the age of the students in a new column. Rename the new column Edad. Filter only those who are over 18 years old. Sort from Lowest to Highest
 

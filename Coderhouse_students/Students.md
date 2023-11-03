@@ -115,7 +115,7 @@ GROUP BY Jornada
 ```
 ![Alt text](image-11.png)
 
-### 12. List the ID, name, last name and how many teachers are assigned to each person in charge. Then filter the managers who have a result of 0 since they are the managers who DO NOT have a teacher assigned. Rename the operation field as Cant_Teachers.
+### 12. List the ID, name, last name and how many teachers are assigned to each person in charge. Then filter the managers who have a result of 0 since they are the managers who DO NOT have a teacher assigned. Rename the operation field as Cant_Docentes.
 
 ```sql
 SELECT Encargado_ID, E.Nombre, E.Apellido, COUNT(DocentesID) AS Cant_Docentes
@@ -124,6 +124,7 @@ ON Encargado_ID = Encargado
 GROUP BY Encargado_ID, E.Nombre, E.Apellido --Columns with no aggregation must be group by
 HAVING COUNT(DocentesID) = 0 -- The WHERE clause is for existing fields and the HAVING clause is applied to the rows in the result set. 
 ```
+![Alt text](image-12.png)
 
 ### 13. List all the data for subjects that do not have an assigned teacher. The query model must start from the teachers table. 
 ```sql
@@ -133,8 +134,7 @@ ON Asignatura = AsignaturasID
 GROUP BY AsignaturasID, A.Nombre, A.Tipo, A.Jornada, A.Costo
 HAVING COUNT (DocentesID) = 0
 ```
-
-![Alt text](image-12.png)
+![Alt text](image-13.png)
 
 ### 14. We want to know the following information about teachers. The full name concatenate the first and last name. Rename "NombresCompletos", the document, make a calculation to know the start month. Rename  "meses_ingreso", the name and telephone of the person in charge: Rename "NombreEncargado" and "TelefonoEncargado", the name of the course or career, the day and the name of the area. You only want to view teachers that have been there for more than 3 months. Order the months from start from highest to lowest.
 ```sql
@@ -154,6 +154,7 @@ JOIN Area AS Ar
 ON Area = AreaID
 ORDER BY DATEDIFF (MONTH,[Fecha Ingreso], (GETDATE()) )
 ```
+![Alt text](image-14.png)
 
 ### 15. Create a unified list with name, surname, document and indicate which base it corresponds to. 
  ```sql
@@ -163,6 +164,6 @@ SELECT E.Nombre, E.Apellido, E.Documento, 'Encargado' AS Marca FROM Encargado AS
 UNION
 SELECT Stu.Nombre, Stu.Apellido, Stu.Documento, 'Estudiantes' AS Marca FROM Estudiantes AS Stu
  ```
-![Alt text](image-13.png)
+![Alt text](image-15.png)
 
 

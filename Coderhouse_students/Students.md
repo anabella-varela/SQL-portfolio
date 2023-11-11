@@ -48,7 +48,7 @@ FROM Staff WHERE [Fecha Ingreso] BETWEEN '2021-01-01' AND '2021-12-31'
 ### 4. Indicate the number of teachers and tutors in charge. Rename the column to CantEncargados. Remove the word Manager in each of the records. Rename the column as NuevoTipo.
 ```sql
 
-/*Need to update database because [Encargado_ID]=100 is reed differently*/
+/*Need to update database because [Encargado_ID]=100 is read differently*/
 update [dbo].[Encargado]
 set tipo= 'Encargado Tutores'
 where trim(Tipo) like '%Tutores%'

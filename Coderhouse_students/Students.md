@@ -3,7 +3,9 @@
 SQL SERVER MANAGEMENT STUDIO
 ## 📔Database: 
 CoderHouse(3).bak consist in 6 tables, named in Spanish: "Area", "Asignaturas", "Encargado", "Estudiantes", "Profesiones", "Staff".
+- Entity relationship diagram
 
+![Alt text](ERD.png)
 ### 1. Indicate how many courses and careers the Data area has. Rename the new column as cant_assignatures.
 First I need to check the ID of the Data area
  ```sql
@@ -156,7 +158,7 @@ ORDER BY DATEDIFF (MONTH,[Fecha Ingreso], (GETDATE()) )
 ```
 ![Alt text](image-14.png)
 
-### 15. Create a unified list with name, surname, document and indicate which base it corresponds to. 
+### 15. Create a unified list with name, surname, document and indicate from which table it corresponds to. 
  ```sql
  SELECT S.Nombre, S.Apellido, S.Documento, 'Staff' AS Marca FROM Staff AS S
 UNION
@@ -167,3 +169,167 @@ SELECT Stu.Nombre, Stu.Apellido, Stu.Documento, 'Estudiantes' AS Marca FROM Estu
 ![Alt text](image-15.png)
 
 
+### 16. Analysis of teachers by class/commission:
+Identificate document number, name of the teacher and 'camada', to identify the oldest and youngest 'camada' according to the 'camada' number.
+Identity document number, name of teacher and class to identify the class with entry date, May 2021.
+Add an indicator field that reports which records are “major or minor” and those that are “May 2021” and order the list from smallest to largest by 'camada'.
+
+```sql
+SELECT Documento, Nombre, Camada, 'Camada_mayor' AS Indicador 
+FROM Staff
+WHERE Camada = (SELECT MAX(Camada) FROM Staff)
+UNION 
+SELECT Documento, Nombre,Camada, 'Camada_menor' AS Indicador 
+FROM Staff
+WHERE Camada = (SELECT MIN(Camada) FROM Staff)
+UNION
+SELECT Documento, Nombre,Camada, 'Mayo_2021' AS Indicador 
+FROM Staff
+WHERE [Fecha Ingreso] LIKE '2021-05-%'
+ORDER BY Camada
+```
+![Alt text](image-16.png)
+
+### 17. Daily student analysis:
+Identify: total number of students by "fecha de ingreso"
+Show the time periods separated by year, month and day, and present the information ordered by the date that most students entered.
+```sql
+SELECT YEAR([Fecha Ingreso]) AS Anio, MONTH([Fecha Ingreso]) AS Mes, DAY([Fecha Ingreso]) AS Día , COUNT(EstudiantesID) AS Cant_estudiantes 
+FROM Estudiantes
+GROUP BY [Fecha Ingreso]
+ORDER BY Cant_estudiantes Desc
+```
+![Alt text](image-17.png)
+
+### 18. Analysis of managers with more teachers in charge:
+Identify the top 10 managers that have the most teachers in charge. Sort from largest to smallest to be able to have the list correctly.
+```sql
+SELECT TOP 10 Encargado_ID, COUNT(DocentesID) AS Docentes_a_cargo, Tipo
+FROM Encargado
+JOIN
+Staff ON Encargado = Encargado_ID
+WHERE Tipo Like '%Docente%'
+GROUP BY Encargado_ID, Tipo
+ORDER BY Docentes_a_cargo Desc
+```
+
+![Alt text](image-18.png)
+
+### 19. Analysis of professions with most students:
+Identify the number of students per profession, show the list only of the professions that have more than 5 students. Order from largest to smallest number of students.
+
+```sql
+SELECT Profesiones, COUNT(EstudiantesID) AS Cant_estudiantes
+FROM Estudiantes
+JOIN Profesiones ON ProfesionesID = Profesion
+GROUP BY Profesiones
+HAVING COUNT(EstudiantesID) > 5
+ORDER BY Cant_estudiantes Desc
+```
+![Alt text](image-19.png)
+
+### 20. Analysis of students by educational area:
+Identify: Area name, if the subject is a career or course, shift, number of students and total amount of the cost of the subject.
+Order the report from highest to lowest by total cost amount, take into account the teachers who do not have assigned subjects or students.
+
+```sql
+SELECT Ar.Nombre AS Area, Asig.Tipo, Asig.Jornada, COUNT(E.EstudiantesID) AS Cant_estudiantes, SUM(Asig.Costo) AS Costo_total
+FROM 
+Estudiantes As E
+RIGHT JOIN Staff ON Docente = DocentesID
+JOIN Asignaturas As Asig ON Asignatura = AsignaturasID
+JOIN Area As Ar ON Area = AreaID
+GROUP BY Ar.Nombre, Asig.Tipo, Asig.Jornada
+ORDER BY Costo_total
+
+```
+![Alt text](image-20.png)
+
+### 21. Monthly analysis of students by area:
+Identify for each area: the year and month (concatenated in YYYYMM format), number of students and total cost of the subjects.
+Sort by most current to oldest month and by highest to lowest number of students.
+
+```sql
+SELECT Area.Nombre, FORMAT(E.[Fecha Ingreso], 'yyyyMM') AS Anio_mes, COUNT(E.EstudiantesID) AS Cant_Estudiantes, SUM(Asig.Costo) AS Costo_Asignatura
+FROM Estudiantes AS E
+JOIN Staff ON Docente = DocentesID
+JOIN Asignaturas as Asig ON Asignatura = AsignaturasID
+JOIN Area ON Area = AreaID
+GROUP BY Area.Nombre, E.[Fecha Ingreso]
+ORDER BY 2 Desc, 3 Desc
+```
+![Alt text](image-21.png)
+
+### 22. Night shift tutors
+Identify the name, the identification document, the "camada" number (only the number) and the date of entry of the person in charge. Sort from largest to smallest "camada" number.
+
+```sql
+SELECT E.Nombre, E.Documento, RIGHT(S.Camada, 5) AS Camada, S.[Fecha Ingreso],  Asig.Jornada
+FROM Encargado AS E
+JOIN Staff AS S ON Encargado = Encargado_ID
+JOIN Asignaturas AS Asig ON Asignatura = AsignaturasID
+WHERE Jornada like '%Noc%' AND E.Tipo like '%Tuto%'
+ORDER BY S.Camada Desc
+```
+
+![Alt text](image-22.png)
+
+### 23. Analysis of subjects without teachers or tutors:
+Identify the type, the shift, the number of unique areas and the total number of subjects that do not have assigned teachers or tutors. Sort by type in descending order.
+
+```sql
+SELECT A.Tipo, A.Jornada, COUNT(DISTINCT A.Area) AS Distinct_Area, COUNT(A.AsignaturasID) AS Cant_Asignaturas 
+FROM Staff AS S 
+RIGHT JOIN Asignaturas AS A ON Asignatura = AsignaturasID
+WHERE DocentesID IS NULL
+GROUP BY A.Tipo, A.Jornada
+ORDER BY A.Tipo Desc
+```
+
+![Alt text](image-23.png)
+
+### 24.  Analysis of subjects above average
+Identify the name of the subject, the cost of the subject and the average cost of the subjects by area.
+Display only the careers wich cost are above the average 
+
+```sql
+WITH AvC AS (
+	SELECT AVG(Costo)AS Costo_del_area, Area
+	FROM Asignaturas
+	GROUP BY Area)
+SELECT 
+	A.Nombre AS Asignatura, 
+	A.Costo AS Costo_por_asignatura, 
+	Area.Nombre	AS Area,
+	Costo_del_area
+FROM Asignaturas AS A
+JOIN Area ON Area = AreaID
+JOIN AvC ON AvC.Area= Area.AreaID
+WHERE A.Costo > Costo_del_area AND A.Tipo Like '%Carrera%'
+ORDER BY A.Costo Desc
+```
+![Alt text](image-24.png)
+
+### 25. Teacher salary increase analysis
+Identify the teacher's name, document, the area, the subject and the the teacher's salary increase (calculated by taking a percentage from the cost of the subject by area: Marketing-17%, Design- 20%, Programming-23%, Product-13%, Data-15%, Tools 8%)
+
+```sql
+SELECT 
+	S.Nombre AS Docente, 
+	S.Documento, 
+	Area.Nombre AS Area, 
+	A.Nombre AS Asignatura,
+	A.Costo,
+	CASE 
+		WHEN Area.Nombre like '%Mark%' THEN A.Costo*0.17
+		WHEN Area.Nombre like '%Dise%' THEN A.Costo*0.20
+		WHEN Area.Nombre like '%Program%' THEN A.Costo*0.23
+		WHEN Area.Nombre like '%Prod%' THEN A.Costo*0.13
+		WHEN Area.Nombre like '%Data%' THEN A.Costo*0.15
+		WHEN Area.Nombre like '%Herra%' THEN A.Costo*0.08
+	END AS Aumento_Salario
+FROM Asignaturas AS A
+JOIN Area ON Area = AreaID
+JOIN Staff AS S ON AsignaturasID = Asignatura
+```
+![Alt text](image-25.png)

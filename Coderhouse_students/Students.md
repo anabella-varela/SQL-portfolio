@@ -2,7 +2,8 @@
 ## 👩‍💻Software: 
 SQL SERVER MANAGEMENT STUDIO
 ## 📔Database: 
-CoderHouse(3).bak consist in 6 tables, named in Spanish: "Area", "Asignaturas", "Encargado", "Estudiantes", "Profesiones", "Staff".
+CoderHouse(3).bak consist in 6 tables, named in Spanish: "Area", "Asignaturas", "Encargado", "Estudiantes", "Profesiones", "Staff". All data is in Spanish.
+
 - Entity relationship diagram
 
 ![Alt text](ERD.png)

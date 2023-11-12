@@ -59,10 +59,17 @@ GROUP BY Tipo
 ```
 ![Alt text](image-4.png)
 
-### 5. Indicate the average price of the carreers and courses per day. Rename the new column "Promedio". Order the averages from Highest to Lowest.
+### 5. Indicate the average price of the careers and courses per shift. Rename the new column "Promedio". Order the averages from Highest to Lowest.
 
 ```sql
-SELECT AVG(Costo) AS Promedio, Tipo FROM Asignaturas GROUP BY Tipo ORDER BY Tipo
+SELECT 
+	AVG(Costo) AS Promedio,
+	Tipo, 
+	Jornada
+FROM Asignaturas 
+GROUP BY Tipo, Jornada
+ORDER BY AVG(Costo) Desc
+
 ```
 ![Alt text](image-5.png)
 

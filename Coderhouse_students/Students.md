@@ -30,7 +30,7 @@ SELECT Nombre, Documento, Telefono, Profesion, [Fecha de Nacimiento]
 FROM Estudiantes
 WHERE (Profesion = (
 					SELECT ProfesionesID FROM Profesiones 
-					WHERE (Profesiones = 'Agronomo Agronoma') AND
+					WHERE (Profesiones like '%Agrono%') AND
 		[Fecha de Nacimiento] BETWEEN '1970-01-01' AND '2000-01-01'
 					)
 		)
@@ -41,7 +41,7 @@ WHERE (Profesion = (
 ### 3. List the teachers who joined in 2021 and concatenate the first and last name fields with a hyphen (-). Example: Elba-Jimenez. Rename the new column  Nombres_Apellidos. The results in the new column must be in uppercase.
 ```sql
 SELECT UPPER (CONCAT_WS ('-', Nombre, Apellido)) AS Nombres_Apellidos 
-FROM Staff WHERE [Fecha Ingreso] BETWEEN '2021-01-01' AND '2021-12-31'
+FROM Staff WHERE YEAR[Fecha Ingreso] = 2021
 ```
 ![Alt text](image-3.png)
 
@@ -78,7 +78,7 @@ ORDER BY AVG(Costo) Desc
 ```sql
 SELECT DATEDIFF(year, [Fecha de Nacimiento], GETDATE()) AS Edad 
 FROM Estudiantes 
-WHERE DATEDIFF(year, [Fecha de Nacimiento], GETDATE()) >= 18
+WHERE DATEDIFF(year, [Fecha de Nacimiento], GETDATE()) > 18
 ORDER BY DATEDIFF(year, [Fecha de Nacimiento], GETDATE()) 
 ```
 ![Alt text](image-6.png)
@@ -92,8 +92,11 @@ WHERE DocentesID> 100 AND (RIGHT(Correo, 4)) = '.edu'
 
 ### 8. It is required to know the document, address, zip code and name of the first students who registered on the platform
 ```sql
-SELECT TOP 5 Documento, Domicilio, [Codigo Postal], Nombre
+SELECT Documento, Domicilio, [Codigo Postal], Nombre
 FROM Estudiantes
+WHERE [Fecha Ingreso] = (
+	SELECT MIN ([Fecha Ingreso])
+	FROM Estudiantes)
 ORDER BY [Fecha Ingreso]
 ```
 ![Alt text](image-8.png)
@@ -113,10 +116,13 @@ SELECT AsignaturasID,
 		Tipo, 
 		Jornada, 
 		Costo, 
-		Area, 
 		CAST((Costo*0.25) AS DECIMAL (10,3)) AS Porcentaje,
 		CAST((Costo * 1.25) AS DECIMAL(10,3)) AS NuevoCosto 
-FROM Asignaturas WHERE Jornada = 'Manana'
+FROM Asignaturas 
+WHERE Jornada = 'Manana' AND Area = (
+							SELECT AreaID
+							FROM Area
+							WHERE Nombre LIKE '%Market%' )
 ```
 ![Alt text](image-10.png)
 
@@ -139,17 +145,17 @@ SELECT Encargado_ID, E.Nombre, E.Apellido, COUNT(DocentesID) AS Cant_Docentes
 FROM Encargado AS E LEFT JOIN Staff AS S
 ON Encargado_ID = Encargado
 GROUP BY Encargado_ID, E.Nombre, E.Apellido --Columns with no aggregation must be group by
-HAVING COUNT(DocentesID) = 0 -- The WHERE clause is for existing fields and the HAVING clause is applied to the rows in the result set. 
+HAVING COUNT(DocentesID) > 0 -- The WHERE clause is for existing fields and the HAVING clause is applied to the rows in the result set. 
 ```
 ![Alt text](image-12.png)
 
 ### 13. List all the data for subjects that do not have an assigned teacher. The query model must start from the teachers table. 
 ```sql
-SELECT AsignaturasID, A.Nombre, A.Tipo, A.Jornada, A.Costo
+SELECT A.Nombre, A.Tipo, A.Jornada, A.Costo, count(s.DocentesID) as Cant_Docentes
 FROM Staff AS S RIGHT JOIN Asignaturas AS A  
 ON Asignatura = AsignaturasID
-GROUP BY AsignaturasID, A.Nombre, A.Tipo, A.Jornada, A.Costo
-HAVING COUNT (DocentesID) = 0
+GROUP BY A.Nombre, A.Tipo, A.Jornada, A.Costo
+HAVING COUNT (s.DocentesID) = 0;
 ```
 ![Alt text](image-13.png)
 
@@ -248,7 +254,11 @@ Identify: Area name, if the subject is a career or course, shift, number of stud
 Order the report from highest to lowest by total cost amount, take into account the teachers who do not have assigned subjects or students.
 
 ```sql
-SELECT Ar.Nombre AS Area, Asig.Tipo, Asig.Jornada, COUNT(E.EstudiantesID) AS Cant_estudiantes, SUM(Asig.Costo) AS Costo_total
+SELECT Ar.Nombre AS Area, 
+Asig.Tipo, 
+Asig.Jornada, 
+COUNT(E.EstudiantesID) AS Cant_estudiantes, 
+SUM(Asig.Costo) AS Costo_total
 FROM 
 Estudiantes As E
 RIGHT JOIN Staff ON Docente = DocentesID

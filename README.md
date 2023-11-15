@@ -9,4 +9,4 @@ Welcome to my Structured query language portfolio! Here, I document a summary of
 
 - 🤸‍♂️[Codility SQL Training](https://github.com/anabella-varela/SQL-portfolio/blob/main/Codility/Codility_SQL_lessons.ipynb)
 
-- 💾[FreeCodeCamp Relational database certification] ()
+- 💾[FreeCodeCamp Relational database certification](https://github.com/anabella-varela/freeCodeCamp)

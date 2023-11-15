@@ -8,3 +8,5 @@ Welcome to my Structured query language portfolio! Here, I document a summary of
 - 👨‍🎓[Coderhouse Students Query](https://github.com/anabella-varela/SQL-portfolio/blob/main/Coderhouse_students/Students.md)
 
 - 🤸‍♂️[Codility SQL Training](https://github.com/anabella-varela/SQL-portfolio/blob/main/Codility/Codility_SQL_lessons.ipynb)
+
+- 💾[FreeCodeCamp Relational database certification] ()

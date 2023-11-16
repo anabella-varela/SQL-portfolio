@@ -6,7 +6,10 @@ Welcome to my Structured query language portfolio! Here, I document a summary of
 ## Table of Contents
 
 - 👨‍🎓[Coderhouse Students Query](https://github.com/anabella-varela/SQL-portfolio/blob/main/Coderhouse_students/Students.md)
+Here I use beginner to intermediate SQL skills: from the fundamentals of SQL, including SELECT statements, WHERE clauses, ORDER BY, and basic JOINs to aggregate functions, GROUP BY and HAVING clauses and subqueries.
 
 - 🤸‍♂️[Codility SQL Training](https://github.com/anabella-varela/SQL-portfolio/blob/main/Codility/Codility_SQL_lessons.ipynb)
+Here I used more advanced functions like Common Table Expressions (CTEs) and some window functions (e.g., ROW_NUMBER(), LEAD())
 
 - 💾[FreeCodeCamp Relational database certification](https://github.com/anabella-varela/freeCodeCamp)
+Here I combine the use of scripting in Bash for automating the creation and use a relational database with PostgreSQL.

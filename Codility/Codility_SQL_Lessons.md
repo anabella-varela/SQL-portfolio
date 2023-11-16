@@ -154,3 +154,23 @@ ORDER BY num_points DESC, team_id
 ```
 ![Alt text](image-1.png)
 
+
+Next: learn 
+Advanced Level:
+Window Functions:
+
+Master the use of window functions (e.g., ROW_NUMBER(), RANK(), LEAD(), LAG()).
+Understand the OVER() clause.
+Common Table Expressions (CTEs):
+
+Learn how to use CTEs for creating temporary result sets.
+Understand the benefits of using CTEs for readability and modularity.
+Stored Procedures and Functions:
+
+Explore the creation of stored procedures and functions.
+Understand the differences between the two and their use cases.
+Indexing and Query Optimization:
+
+Learn about indexing strategies to improve query performance.
+Understand query optimization techniques.
+

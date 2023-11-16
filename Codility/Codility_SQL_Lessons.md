@@ -120,7 +120,7 @@ your query should return:
 ```
 
 🟢SOLUTION:
-Here I used the Common table expresion (CTE) WITH and the Coalesce function to handle NULL values.
+Here I used the Common table expresion (CTE) WITH and the Coalesce function to handle NULL values. 
 
 ```sql
 WITH team_points AS(
@@ -131,7 +131,8 @@ WITH team_points AS(
 			END AS num_points
 	FROM matches
 
-UNION
+UNION ALL
+
 	SELECT guest_team AS team_id,
 	CASE	WHEN host_goals < guest_goals THEN 3
 			WHEN host_goals = guest_goals THEN 1
